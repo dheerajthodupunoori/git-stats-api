@@ -1,5 +1,5 @@
 import requests
-from app.userprofile import config
+from ..userprofile import config
 
 
 class UserService:
