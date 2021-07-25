@@ -2,7 +2,25 @@ from fastapi import FastAPI, HTTPException, Response
 from .userprofile.user_service import UserService
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+tags_metadata = [
+    {
+        "name": "Fast API demo",
+        "description": "These are Fast API demo endpoints."
+    },
+    {
+        "name": "Github User Operations",
+        "description": "These operations fetches various information of the user's github profile."
+    }
+]
+
+app = FastAPI(
+    title="Github Stats",
+    version="1.0.0",
+    description="This API is integrated with github rest api to fetch user info and generate statistics",
+    openapi_tags=tags_metadata,
+    docs_url="/swagger",
+    redoc_url="/"
+)
 
 origins = [
     "http://localhost",
@@ -19,12 +37,12 @@ app.add_middleware(
 )
 
 
-@app.get("/")
+@app.get("/", tags=["Fast API demo"])
 def read_root():
     return "This API is built using FAST API , which performs some operations using Github API"
 
 
-@app.get("/getUserDetails/{username}")
+@app.get("/getUserDetails/{username}", tags=["Github User Operations"])
 def getUserDetails(username: str):
     try:
         userService = UserService(username)
@@ -38,7 +56,7 @@ def getUserDetails(username: str):
         )
 
 
-@app.get("/getUserFollowers/{username}")
+@app.get("/getUserFollowers/{username}", tags=["Github User Operations"])
 def getUserFollowers(username: str):
     try:
         userService = UserService(username)
@@ -51,7 +69,7 @@ def getUserFollowers(username: str):
         )
 
 
-@app.get("/getUserGists/{username}")
+@app.get("/getUserGists/{username}", tags=["Github User Operations"])
 def getUserGists(username: str):
     try:
         userService = UserService(username)
@@ -69,7 +87,7 @@ def getUserGists(username: str):
         )
 
 
-@app.get("/getUserGist/{username}/{gist_id}")
+@app.get("/getUserGist/{username}/{gist_id}", tags=["Github User Operations"])
 def getUserGist(username: str, gist_id: str):
     try:
         userService = UserService(username)
@@ -86,7 +104,7 @@ def getUserGist(username: str, gist_id: str):
         )
 
 
-@app.get("/getUserRepos/{username}")
+@app.get("/getUserRepos/{username}", tags=["Github User Operations"])
 def getUserRepos(username: str):
     try:
         userService = UserService(username)
@@ -103,7 +121,7 @@ def getUserRepos(username: str):
         )
 
 
-@app.get("getUserRepoLanguages/{username}/{repo_name}")
+@app.get("getUserRepoLanguages/{username}/{repo_name}", tags=["Github User Operations"])
 def getUserRepoLanguages(username: str, repo_name: str):
     try:
         userService = UserService(username)
