@@ -1,15 +1,18 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path
 from fastapi.openapi.models import Response
 from ..userprofile.user_service import UserService
 
 user_info_router = APIRouter(
     tags=["Github User Operations"],
-    responses={404: {"description": "Not found"}},
 )
 
 
-@user_info_router.get("/getUserDetails/{username}")
-def getUserDetails(username: str):
+@user_info_router.get("/getUserDetails/{username}",
+                      description="This API route will fetch the user details.",
+                      status_code=200)
+def getUserDetails(username: str = Path(..., min_length=2,
+                                        title="Github username",
+                                        description="This is the github username")):
     try:
         userService = UserService(username)
         userDetails = userService.getUserDetails()
@@ -22,8 +25,12 @@ def getUserDetails(username: str):
         )
 
 
-@user_info_router.get("/getUserFollowers/{username}")
-def getUserFollowers(username: str):
+@user_info_router.get("/getUserFollowers/{username}",
+                      description="This API route will fetch all the user followers.",
+                      status_code=200)
+def getUserFollowers(username: str = Path(..., min_length=2,
+                                          title="Github username",
+                                          description="This is the github username")):
     try:
         userService = UserService(username)
         followers = userService.getUserFollowers()
@@ -35,7 +42,8 @@ def getUserFollowers(username: str):
         )
 
 
-@user_info_router.get("/getUserGists/{username}")
+@user_info_router.get("/getUserGists/{username}",
+                      description="This API route will fetch all the user gists.")
 def getUserGists(username: str):
     try:
         userService = UserService(username)
@@ -53,7 +61,8 @@ def getUserGists(username: str):
         )
 
 
-@user_info_router.get("/getUserGist/{username}/{gist_id}")
+@user_info_router.get("/getUserGist/{username}/{gist_id}",
+                      description="This API route will fetch a specific gist , given the gist id")
 def getUserGist(username: str, gist_id: str):
     try:
         userService = UserService(username)
@@ -70,7 +79,8 @@ def getUserGist(username: str, gist_id: str):
         )
 
 
-@user_info_router.get("/getUserRepos/{username}")
+@user_info_router.get("/getUserRepos/{username}",
+                      description="This API route will fetch the user repositories")
 def getUserRepos(username: str):
     try:
         userService = UserService(username)
@@ -87,7 +97,8 @@ def getUserRepos(username: str):
         )
 
 
-@user_info_router.get("getUserRepoLanguages/{username}/{repo_name}")
+@user_info_router.get("/getUserRepoLanguages/{username}/{repo_name}",
+                      description="This API route will fetch the languages used in a specific repository.")
 def getUserRepoLanguages(username: str, repo_name: str):
     try:
         userService = UserService(username)

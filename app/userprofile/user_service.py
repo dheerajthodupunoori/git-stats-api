@@ -12,8 +12,11 @@ class UserService:
 
         try:
             print("Checking if valid user ot not")
+            params = {
+                "access_token": "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"
+            }
             request_url = config.user_profile_url.format(username=self.username)
-            response = requests.get(request_url)
+            response = requests.get(request_url,params=params)
             print(response.json())
             if 'message' in response.json():
                 print("Is not valid user")
@@ -63,7 +66,10 @@ class UserService:
         print("User repos request url: ", user_repos_request_url)
 
         try:
-            user_repos_response = requests.get(user_repos_request_url)
+            params = {
+                "access_token": "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"
+            }
+            user_repos_response = requests.get(user_repos_request_url,params=params)
             return user_repos_response.json()
         except Exception as e:
             raise e

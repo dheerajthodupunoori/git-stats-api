@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .userprofile.user_info import user_info_router
 from .userprofile.language_operations import language_operations_router
+from app.emailoperations.email_routes import email_operations_router
 
 tags_metadata = [
     {
@@ -15,13 +16,17 @@ tags_metadata = [
     {
         "name": "Languages used operations",
         "description": "These are responsible for computing language statistics based on users github profile."
+    },
+    {
+        "name": "Email Operations",
+        "description": "These routes are responsible for sending emails from the user to the admin of this API."
     }
 ]
 
 app = FastAPI(
     title="Github Stats",
     version="1.0.0",
-    description="This API is integrated with github rest api to fetch user info and generate statistics",
+    description="This API is integrated with github rest api to fetch user info and generate statistics.",
     openapi_tags=tags_metadata,
     docs_url="/swagger",
     redoc_url="/"
@@ -29,6 +34,7 @@ app = FastAPI(
 
 app.include_router(user_info_router)
 app.include_router(language_operations_router)
+app.include_router(email_operations_router)
 
 origins = [
     "http://localhost",
