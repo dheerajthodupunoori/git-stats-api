@@ -8,7 +8,7 @@ def generateAllLanguagesUsage(username: str, repo_names: List[str]):
     total_lines = 0
     for repo_name in repo_names:
         params = {
-            "access_token":"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"
+            "access_token": "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"
         }
         request_url = user_repo_languages_used_url.format(username=username, repo_name=repo_name)
         response = requests.get(request_url,
@@ -19,7 +19,7 @@ def generateAllLanguagesUsage(username: str, repo_names: List[str]):
 
         for language in response:
 
-            print("     ",language)
+            print("     ", language)
 
             language_name: str = language
             language_lines = response[language]
@@ -38,7 +38,7 @@ def generateAllLanguagesUsage(username: str, repo_names: List[str]):
     for language in result:
         name = language
         lines = result[language]
-        percentage = (lines*100)/total_lines
+        percentage = (lines * 100) / total_lines
         language_with_percentages.append(
             {
                 "name": name,
