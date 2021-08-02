@@ -1,14 +1,16 @@
 from .config import user_repo_languages_used_url
 from typing import List
 import requests
+from os import getenv
 
 
 def generateAllLanguagesUsage(username: str, repo_names: List[str]):
     result = dict()
     total_lines = 0
+    access_token = getenv("GITHUB_ACCESS_TOKEN")
     for repo_name in repo_names:
         params = {
-            "access_token": "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"
+            "access_token": access_token
         }
         request_url = user_repo_languages_used_url.format(username=username, repo_name=repo_name)
         response = requests.get(request_url,

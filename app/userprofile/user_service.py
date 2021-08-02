@@ -1,5 +1,6 @@
 import requests
 from ..userprofile import config
+import os
 
 
 class UserService:
@@ -12,8 +13,9 @@ class UserService:
 
         try:
             print("Checking if valid user ot not")
+            access_token = os.getenv("GITHUB_ACCESS_TOKEN")
             params = {
-                "access_token": "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"
+                "access_token": access_token
             }
             request_url = config.user_profile_url.format(username=self.username)
             print(request_url)
@@ -67,8 +69,9 @@ class UserService:
         print("User repos request url: ", user_repos_request_url)
 
         try:
+            access_token = os.getenv("GITHUB_ACCESS_TOKEN")
             params = {
-                "access_token": "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"
+                "access_token": access_token
             }
             user_repos_response = requests.get(user_repos_request_url, params=params)
             return user_repos_response.json()
