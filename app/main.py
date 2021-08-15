@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .userprofile.user_info import user_info_router
 from .userprofile.language_operations import language_operations_router
 from app.emailoperations.email_routes import email_operations_router
+from fastapi.staticfiles import StaticFiles
 
 tags_metadata = [
     {
@@ -49,6 +50,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/about", StaticFiles(directory="app/static", html=True), name="info")
 
 
 @app.get("/", tags=["Fast API demo"])
