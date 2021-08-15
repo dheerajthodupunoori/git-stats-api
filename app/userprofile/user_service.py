@@ -14,13 +14,12 @@ class UserService:
         try:
             print("Checking if valid user ot not")
             access_token = os.getenv("GITHUB_ACCESS_TOKEN")
+            print(access_token)
             params = {
                 "access_token": access_token
             }
             request_url = config.user_profile_url.format(username=self.username)
-            print(request_url)
             response = requests.get(request_url, params=params)
-            print(response.json())
             if 'message' in response.json():
                 print("Is not valid user")
                 return False

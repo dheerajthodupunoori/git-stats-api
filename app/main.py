@@ -4,6 +4,8 @@ from .userprofile.user_info import user_info_router
 from .userprofile.language_operations import language_operations_router
 from app.emailoperations.email_routes import email_operations_router
 from fastapi.staticfiles import StaticFiles
+from app.recentactivity.recent_activiy_routes import recent_activity_router
+
 
 tags_metadata = [
     {
@@ -17,6 +19,11 @@ tags_metadata = [
     {
         "name": "Languages used operations",
         "description": "These are responsible for computing language statistics based on users github profile."
+    },
+    {
+        "name": "Recent Activity",
+        "description": "These path operations are responsible for generating the recent activity of the users github "
+                       "account. "
     }
 ]
 
@@ -31,6 +38,7 @@ app = FastAPI(
 
 app.include_router(user_info_router)
 app.include_router(language_operations_router)
+app.include_router(recent_activity_router)
 
 origins = [
     "http://localhost",
