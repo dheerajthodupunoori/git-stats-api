@@ -17,10 +17,6 @@ tags_metadata = [
     {
         "name": "Languages used operations",
         "description": "These are responsible for computing language statistics based on users github profile."
-    },
-    {
-        "name": "Email Operations",
-        "description": "These routes are responsible for sending emails from the user to the admin of this API."
     }
 ]
 
@@ -35,7 +31,6 @@ app = FastAPI(
 
 app.include_router(user_info_router)
 app.include_router(language_operations_router)
-app.include_router(email_operations_router)
 
 origins = [
     "http://localhost",
@@ -52,6 +47,25 @@ app.add_middleware(
 )
 
 app.mount("/about", StaticFiles(directory="app/static", html=True), name="info")
+
+tags_metadata_for_email_api = [
+    {
+        "name": "Email Operations",
+        "description": "These routes are responsible for sending emails from the user to the admin of this API."
+    }
+]
+
+email_api = FastAPI(
+    title="Github Stats email operations",
+    openapi_tags=tags_metadata_for_email_api,
+    description="This API is responsible for handling email operations for Git Stats API.",
+    version="1.0.0",
+    docs_url="/",
+    redoc_url="/redoc"
+)
+email_api.include_router(email_operations_router)
+
+app.mount("/email", email_api)
 
 
 @app.get("/", tags=["Fast API demo"])
