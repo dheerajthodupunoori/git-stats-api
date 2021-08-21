@@ -78,4 +78,4 @@ app.mount("/email", email_api)
 
 @app.get("/", tags=["Fast API demo"])
 def read_root():
-    return "This API is built using FAST API , which performs some operations using Github API"
+    return "This API is built using Python FAST API , which performs some operations using Github API."

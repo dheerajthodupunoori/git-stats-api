@@ -1,9 +1,10 @@
 from ..userprofile.config import recent_activity_url
 import requests
 from os import getenv
-from .event_payload import EventTypeFactory
+from .event_factory import EventTypeFactory
 from typing import Optional
 import traceback
+from .recent_activity_custom_exceptions import InvalidGithubEventType
 
 
 class RecentActivityService:
@@ -41,6 +42,7 @@ class RecentActivityService:
                 new_event["id"] = event.get("id")
                 new_event["type"] = event.get("type")
                 new_event["created_at"] = event.get("created_at")
+                new_event["avatar_url"] = event.get("avatar_url")
 
                 repo = event.get("repo")
 
@@ -62,6 +64,8 @@ class RecentActivityService:
                 result[event.get("type")].append(new_event)
 
             return result
+        except InvalidGithubEventType as invalid_github_event:
+            raise invalid_github_event
         except Exception as error:
             traceback.print_exc()
             raise error

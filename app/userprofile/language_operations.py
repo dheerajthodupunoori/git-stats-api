@@ -37,7 +37,7 @@ def generateOverallLanguagePercentage(username: str):
     if user_service.isValidGithubUser():
         user_repos = user_service.getUserRepos()
         repo_names = {repo["name"] for repo in user_repos}
-        response = generateAllLanguagesUsage(username,repo_names)
+        response = generateAllLanguagesUsage(username, repo_names)
     else:
         return {"message": "Invalid Github username"}
     return response

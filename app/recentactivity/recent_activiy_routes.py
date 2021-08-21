@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from ..userprofile.user_service import UserService
 from typing import Optional
 from .recent_activity_service import RecentActivityService
+from .recent_activity_custom_exceptions import InvalidGithubEventType
 
 recent_activity_router = APIRouter(
     tags=["Recent Activity"]
@@ -24,6 +25,11 @@ def getRecentActivity(username: str, limit: Optional[int] = 20):
             recent_activity = recent_activity_service.getRecentActivity()
 
         return recent_activity
+    except InvalidGithubEventType as invalid_github_event:
+        raise HTTPException(
+            status_code=500,
+            detail= invalid_github_event
+        )
     except Exception as error:
         raise HTTPException(
             status_code=500,
