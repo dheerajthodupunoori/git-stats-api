@@ -42,7 +42,7 @@ class RecentActivityService:
                 new_event["id"] = event.get("id")
                 new_event["type"] = event.get("type")
                 new_event["created_at"] = event.get("created_at")
-                new_event["avatar_url"] = event.get("avatar_url")
+                new_event["avatar_url"] = event.get("actor").get("avatar_url")
 
                 repo = event.get("repo")
 
